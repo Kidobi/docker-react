@@ -1,0 +1,30 @@
+version: '3'
+services:
+    web:
+        build:
+            # can't just use "build: ." above because the Dockerfile is called Dockerfile.dev
+            # need to specify Dockerfile.dev specifically
+            context: .
+            dockerfile: Dockerfile.dev
+        ports:
+            - "3000:3000"
+        # specify volumes
+        volumes:
+            # the bookmark
+            - /app/node_modules
+            # <localdir>:<containerdir> <--- the . here is for current dir
+            # NOTE: in docker-compose.yml, it's . here, but in run command, it's $(pwd)
+            - .:/app
+        # the below line is a workaround for a React bug
+        stdin_open: true
+    # a second service just for running tests
+    tests:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        # NOTE: don't need port mapping because no actual server is running that needs to be connected to
+        volumes:
+            - /app/node_modules
+            - .:/app
+        # use this to overwrite the default command for this service ("npm run start")
+        command: ["npm", "run", "test"]
