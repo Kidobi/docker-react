@@ -21,4 +21,22 @@ before_install:
 script:
     - docker run -e CI=true kidobi/docker-react npm run test
 
-# step 4 tell travis how to deploy our code to AWS
+# STEP 4: tell travis how to deploy our code to AWS
+deploy:
+    # Travis CI is pre-configured to support a lot of common providers
+    provider: elasticbeanstalk
+
+    # elasticbeanstalk environment details
+    region: "ca-central-1"
+    app: "charlie-docker-react-test"
+    environmentname: "CharlieDockerReactTest-env-1"
+    bucket_name: "elasticbeanstalk-ca-central-1-403263076102"
+    bucket_path: "charlie-docker-react-test"
+    
+    # only deploy if commits are made to the master branch in github
+    on:
+        branch: master
+    
+    # AWS API Keys: environment variables defined in Travis CI dashboard settings
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
