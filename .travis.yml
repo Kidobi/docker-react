@@ -1,10 +1,24 @@
+# workaround
+language: generic
+
 # tell travis CI that superadmin is required
 sudo: required
 
+# STEP 1:
 # tell travis CI you need a copy of docker
 services:
     - docker
 
-# things travis needs to do before tests are executed
+# STEP 2:
+# tell travis to build image using Dockerfile.dev
 before_install:
     - docker build -t kidobi/docker-react -f Dockerfile.dev .
+
+# STEP 3:
+# tell travis how to run test suite
+# NOTE: run command is slightly different. have to use -e to set environment variable
+# CI=true so that test runs and exits non-interactively
+script:
+    - docker run -e CI=true kidobi/docker-react npm run test
+
+# step 4 tell travis how to deploy our code to AWS
