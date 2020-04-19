@@ -1,5 +1,5 @@
 # "as" is used to tag this phase of the build as "builder"
-FROM node:alpine as builder
+FROM node:alpine
 WORKDIR '/app'
 COPY package.json .
 RUN npm install
@@ -19,5 +19,5 @@ EXPOSE 80
 
 # --from tag allows copy from another stage/container
 # syntax COPY --from=sourceStage <sourceDir> <destinationDir>
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=0 /app/build /usr/share/nginx/html
 # NOTE: in this container, nginx automatically starts, so nothing needs to be run. Just need to copy the static HTML files
