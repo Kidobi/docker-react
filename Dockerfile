@@ -12,6 +12,11 @@ RUN npm run build
 
 # the FROM statement here specifies a new block in the Dockerfile. Each block can only have one FROM statement
 FROM nginx
+
+# EXPOSE usually does nothing. It's more of a note to devs that this port will need to be opened.
+# however, services like elasticbeanstalk will use this to know what port to open on the container
+EXPOSE 80
+
 # --from tag allows copy from another stage/container
 # syntax COPY --from=sourceStage <sourceDir> <destinationDir>
 COPY --from=builder /app/build /usr/share/nginx/html
