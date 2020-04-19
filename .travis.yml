@@ -1,0 +1,10 @@
+# tell travis CI that superadmin is required
+sudo: required
+
+# tell travis CI you need a copy of docker
+services:
+    - docker
+
+# things travis needs to do before tests are executed
+before_install:
+    - docker build -t kidobi/docker-react -f Dockerfile.dev .
