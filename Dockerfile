@@ -1,10 +1,10 @@
 # "as" is used to tag this phase of the build as "builder"
 FROM node:alpine
 WORKDIR '/app'
-COPY package.json .
+COPY package*.json ./
 RUN npm install
 # volumes setup not necessary, because we don't care about instant live changes in prod build
-COPY . .
+COPY ./ ./
 
 # produce the package used by the next phase
 # build package will be located in /app/build
