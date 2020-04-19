@@ -29,7 +29,7 @@ deploy:
     # elasticbeanstalk environment details
     region: "ca-central-1"
     app: "charlie-docker-react-test"
-    environmentname: "CharlieDockerReactTest-env-1"
+    env: "CharlieDockerReactTest-env-1"
     bucket_name: "elasticbeanstalk-ca-central-1-403263076102"
     bucket_path: "charlie-docker-react-test"
     
@@ -40,3 +40,6 @@ deploy:
     # AWS API Keys: environment variables defined in Travis CI dashboard settings
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
+
+    access_key_id: $AWS_ACCESS_KEY
+secret_access_key: $AWS_SECRET_KEY
